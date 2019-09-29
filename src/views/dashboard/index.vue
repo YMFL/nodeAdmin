@@ -5,23 +5,27 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 
 import { getTest } from '@/api/user'
 
 export default {
   name: 'Dashboard',
+  data(){
+    return {
+      name:''
+    }
+  },
   computed: {
-    ...mapGetters([
-      'name'
-    ])
   },
   mounted() {
     this.getTest()
   },
   methods: {
     async getTest() {
-      await getTest()
+      let res = await getTest()
+      if(res.code===1){
+        this.name=res.data.userInfo.username
+      }
     }
   }
 }
